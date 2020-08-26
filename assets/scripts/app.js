@@ -29,36 +29,52 @@ function writeToLog(
         console.log(logEntries);
 }
 
-function add() {
+function calculateResult(calculationType) {
+    if (
+        calculationType !== 'ADD' &&
+        calculationType !== 'SUBTRACT' &&
+        calculationType !== 'MULTIPLY' &&
+        calculationType !== 'DIVIDE'
+    ) {
+        return;
+    }
     const enteredNumber = getUserNumberInput();
     initialresult = currentResult;
-    currentResult += enteredNumber;
-    createAndWriteOutput('+', initialresult, enteredNumber);
-    writeToLog('ADD', initialresult, enteredNumber, currentResult);
+    let mathOperator;
+    if (calculationType === 'ADD') {
+        currentResult += enteredNumber;
+        mathOperator = '+';
+    } 
+    else if (calculationType === 'SUBTRACT') {
+        currentResult -= enteredNumber;
+        mathOperator = '-';
+    }
+    else if (calculationType === 'MULTIPLY') {
+        currentResult *= enteredNumber;
+        mathOperator = '*';
+    }
+    else if (calculationType === 'DIVIDE') {
+        currentResult /= enteredNumber;
+        mathOperator = '/';
+    }
+    createAndWriteOutput(mathOperator, initialresult, enteredNumber);
+    writeToLog(calculationType, initialresult, enteredNumber, currentResult);
+}
+
+function add() {
+    calculateResult('ADD');
 }
 
 function subtract() {
-    const enteredNumber = getUserNumberInput();
-    initialresult = currentResult;
-    currentResult -= enteredNumber;
-    createAndWriteOutput('-', initialresult, enteredNumber);
-    writeToLog('SUBTRACT', initialresult, enteredNumber, currentResult);
+    calculateResult('SUBTRACT');
 }
 
 function divide() {
-    const enteredNumber = getUserNumberInput();
-    initialresult = currentResult;
-    currentResult /= enteredNumber;
-    createAndWriteOutput('/', initialresult, enteredNumber);
-    writeToLog('DIVIDE', initialresult, enteredNumber, currentResult);
+    calculateResult('DIVIDE');
 }
 
 function multiply() {
-    const enteredNumber = getUserNumberInput();
-    initialresult = currentResult;
-    currentResult *= enteredNumber;
-    createAndWriteOutput('*', initialresult, enteredNumber);
-    writeToLog('MULTIPLY', initialresult, enteredNumber, currentResult);
+    calculateResult('MULTIPLY');
 }
 
 addBtn.addEventListener('click', add);
